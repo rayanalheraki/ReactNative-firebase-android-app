@@ -1,6 +1,6 @@
 import React from 'react';
 import 'react-native-gesture-handler';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet,TouchableOpacity, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './screens/HomeScreen';
