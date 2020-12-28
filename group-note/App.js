@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import Route from './route.js';
 import firebase from './firebase-connect/firebaseConf';
 
 
@@ -8,19 +9,14 @@ import firebase from './firebase-connect/firebaseConf';
  firebase.database()
           .ref(`/notes/1`)
           .on('value', snapshot => {
-              console.log('-----------',snapshot.val());
+              console.log('----------',snapshot.val());
                     
                     
           },[]);
 
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+  return <Route/>;
 }
 
 const styles = StyleSheet.create({
