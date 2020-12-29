@@ -7,6 +7,15 @@ class Login extends React.Component {
         password: ''
     }
 
+    handleLogin = () => {
+        const { email, password } = this.state
+
+        Firebase.auth()
+            .signInWithEmailAndPassword(email, password)
+            .then(() => this.props.navigation.navigate('Profile'))
+            .catch(error => console.log(error))
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -27,7 +36,10 @@ class Login extends React.Component {
                 <TouchableOpacity style={styles.button}>
                     <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
-                <Button title="Don't have an account yet? Sign up" />
+                <Button
+                    title="Don't have an account yet? Sign up"
+                    onPress={() => alert('Add code here to navigate to Signup screen')}
+                />
             </View>
         )
     }
