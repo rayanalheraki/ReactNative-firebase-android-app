@@ -1,8 +1,9 @@
 import React from 'react'
-import { View, TextInput, StyleSheet, TouchableOpacity, Text, Button } from 'react-native'
+import { View, TextInput, StyleSheet, TouchableOpacity, Text } from 'react-native'
 
-class Login extends React.Component {
+class Signup extends React.Component {
     state = {
+        name: '',
         email: '',
         password: ''
     }
@@ -10,6 +11,12 @@ class Login extends React.Component {
     render() {
         return (
             <View style={styles.container}>
+                <TextInput
+                    style={styles.inputBox}
+                    value={this.state.name}
+                    onChangeText={name => this.setState({ name })}
+                    placeholder='Full Name'
+                />
                 <TextInput
                     style={styles.inputBox}
                     value={this.state.email}
@@ -25,9 +32,8 @@ class Login extends React.Component {
                     secureTextEntry={true}
                 />
                 <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonText}>Login</Text>
+                    <Text style={styles.buttonText}>Signup</Text>
                 </TouchableOpacity>
-                <Button title="Don't have an account yet? Sign up" />
             </View>
         )
     }
@@ -54,8 +60,8 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         paddingVertical: 5,
         alignItems: 'center',
-        backgroundColor: '#F6820D',
-        borderColor: '#F6820D',
+        backgroundColor: '#FFA611',
+        borderColor: '#FFA611',
         borderWidth: 1,
         borderRadius: 5,
         width: 200
@@ -70,4 +76,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Login
+export default Signup
