@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Route from './route.js';
 import firebase from './firebase-connect/firebaseConf';
+import Signup from './screens/Signup.js';
 
 
 // firebase test 
@@ -16,7 +17,7 @@ import firebase from './firebase-connect/firebaseConf';
 
 
 export default function App() {
-  return <Route/>;
+  return <Signup/>;
 }
 
 const styles = StyleSheet.create({

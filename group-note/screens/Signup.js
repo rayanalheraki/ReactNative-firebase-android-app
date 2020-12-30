@@ -1,11 +1,21 @@
 import React from 'react'
 import { View, TextInput, StyleSheet, TouchableOpacity, Text } from 'react-native'
+import * as Firebase from 'firebase';
+
 
 class Signup extends React.Component {
     state = {
         name: '',
         email: '',
         password: ''
+    }
+
+    handleSignUp = () => {
+        const { email, password } = this.state
+        Firebase.auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then(() => this.props.navigation.navigate('Login'))
+            .catch(error => console.log(error))
     }
 
     render() {
@@ -31,7 +41,7 @@ class Signup extends React.Component {
                     placeholder='Password'
                     secureTextEntry={true}
                 />
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={this.handleSignUp}>
                     <Text style={styles.buttonText}>Signup</Text>
                 </TouchableOpacity>
             </View>
