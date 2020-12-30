@@ -1,5 +1,7 @@
 import React from 'react'
 import { View, TextInput, StyleSheet, TouchableOpacity, Text } from 'react-native'
+import * as Firebase from 'firebase';
+
 
 class Signup extends React.Component {
     state = {
@@ -12,8 +14,13 @@ class Signup extends React.Component {
         const { email, password } = this.state
         Firebase.auth()
             .createUserWithEmailAndPassword(email, password)
+<<<<<<< HEAD
             .then(() => this.props.navigation.navigate('Profile'))
             .catch(error => console.log(error))
+=======
+            .then(() => this.props.navigation.navigate('Login'))
+            .catch(error => alert(error))
+>>>>>>> auth-working
     }
 
     render() {

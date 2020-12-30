@@ -10,6 +10,7 @@ import JoinGroup from './screens/JoinGroup';
 import GroupScreen from './screens/GroupScreen';
 import Login from './screens/Login';
 import Register from './screens/Register';
+import Signup from './screens/Signup';
 
 const Stack = createStackNavigator();
 
@@ -29,6 +30,7 @@ export default function Route() {
         }}
         >
             <Stack.Screen name="Login" component={Login} options={() => ({ headerTitle: "Login" })} />
+            <Stack.Screen name="Signup" component={Signup} options={() => ({ headerTitle: "Signup" })} />
             <Stack.Screen name="Register" component={Register} options={() => ({ headerTitle: "Register" })} />
             <Stack.Screen
                 name="HomeScreen"
