@@ -18,7 +18,7 @@ import Login from './screens/Login.js';
 
 
 export default function App() {
-  return <Login/>;
+  return <Route/>;
 }
 
 const styles = StyleSheet.create({

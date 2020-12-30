@@ -15,7 +15,7 @@ class Login extends React.Component {
         Firebase.auth()
             .signInWithEmailAndPassword(email, password)
             .then(() => this.props.navigation.navigate('HomeScreen'))
-            .catch(error => console.log(error))
+            .catch(error => alert(error))
     }
 
     render() {
