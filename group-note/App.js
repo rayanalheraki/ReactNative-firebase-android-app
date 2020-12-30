@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Route from './route.js';
 import firebase from './firebase-connect/firebaseConf';
 import Signup from './screens/Signup.js';
+import Login from './screens/Login.js';
 
 
 // firebase test 
@@ -17,7 +18,7 @@ import Signup from './screens/Signup.js';
 
 
 export default function App() {
-  return <Signup/>;
+  return <Login/>;
 }
 
 const styles = StyleSheet.create({
