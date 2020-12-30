@@ -12,18 +12,10 @@ class Login extends React.Component {
 
     handleLogin = () => {
         const { email, password } = this.state
-<<<<<<< HEAD
-
-        Firebase.auth()
-            .signInWithEmailAndPassword(email, password)
-            .then(() => this.props.navigation.navigate('Profile'))
-            .catch(error => console.log(error))
-=======
         Firebase.auth()
             .signInWithEmailAndPassword(email, password)
             .then(() => this.props.navigation.navigate('HomeScreen'))
             .catch(error => alert(error))
->>>>>>> auth-working
     }
 
     render() {
@@ -49,11 +41,7 @@ class Login extends React.Component {
                 </TouchableOpacity>
                 <Button
                     title="Don't have an account yet? Sign up"
-<<<<<<< HEAD
-                    onPress={() => alert('Add code here to navigate to Signup screen')}
-=======
                     onPress={() => this.props.navigation.navigate('Signup')}
->>>>>>> auth-working
                 />
             </View>
         )
