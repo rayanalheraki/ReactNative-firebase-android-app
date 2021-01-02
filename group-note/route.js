@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import { StyleSheet,Button , TouchableOpacity, Text, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import "react-native-gesture-handler";
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -8,7 +8,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import HomeScreen from './screens/HomeScreen';
-import GroupOp from './screens/GroupOp';
 import CreateGroup from './screens/CreateGroup';
 import JoinGroup from './screens/JoinGroup';
 import GroupScreen from './screens/GroupScreen';
@@ -40,8 +39,26 @@ function HomeStackNavigation() {
       }}
     >
         <StackHome.Screen 
-
           name="HomeScreen" component={HomeScreen} 
+          options={({ navigation }) => ({
+            headerTitle: "Your Groups",
+            headerRight: () => (
+              <View style={{ flexDirection: "row", justifyContent: "flex-end", marginRight: 15, width: 120 }} >
+
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.toggleDrawer();
+                  }}
+                >
+                  <Ionicons
+                    name='list-outline'
+                    size={30}
+                    color='white'
+                  />
+                </TouchableOpacity>
+              </View>
+            ),
+          })}
           />
         <StackHome.Screen name="Note" component={Note} />
         <StackHome.Screen name="NoteEdit" component={NoteEdit} />
@@ -180,36 +197,10 @@ export default function Route() {
               <>
                 <Stack.Screen name="Login" component={Login} options={() => ({ headerTitle: "Login" })} />
                 <Stack.Screen name="Signup" component={Signup} options={() => ({ headerTitle: "Signup" })} />
+                <Stack.Screen name="MainDrawerNavigation" component={MainDrawerNavigation} options={()=>({ headerShown: false}) } />
               </>
             )}
            
-            <Stack.Screen
-                name="HomeScreen"
-                backgroundColor="red"
-                component={HomeScreen}
-                options={({ navigation }) => ({
-
-                headerTitle: "Your Groups",
-                headerRight: () => (
-                    <View style={{ flexDirection: "row", justifyContent: "flex-end", marginRight: 15, width: 120 }} >
-
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => {
-                            navigation.navigate('newGroup')
-                        }}
-                    >
-                        <Text style={styles.text}>+</Text>
-                    </TouchableOpacity>
-                    </View>
-                ),
-                })}
-            />
-            <Stack.Screen name="newGroup" component={GroupOp} options={() => ({ headerTitle: "New Group" })} />
-            <Stack.Screen name="createGroup" component={CreateGroup} options={() => ({ headerTitle: "Create a Group" })} />
-            <Stack.Screen name="joinGroup" component={JoinGroup} options={() => ({ headerTitle: "Join a Group" })} />
-            <Stack.Screen name="groupScreen" component={GroupScreen} options={() => ({ headerTitle: "Group Page" })} />
-
         </Stack.Navigator>
     </NavigationContainer>
   );
