@@ -40,6 +40,7 @@ class Login extends React.Component {
                     <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
                 <Button
+                // Navigate to create account page
                     title="Don't have an account yet? Sign up"
                     onPress={() => this.props.navigation.navigate('Signup')}
                 />
