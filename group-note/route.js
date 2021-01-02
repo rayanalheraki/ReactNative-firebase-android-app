@@ -12,6 +12,7 @@ import Login from './screens/Login';
 import Register from './screens/Register';
 import Signup from './screens/Signup';
 
+// Used for navigating between screens
 const Stack = createStackNavigator();
 
 export default function Route() {
