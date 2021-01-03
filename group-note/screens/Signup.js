@@ -52,7 +52,7 @@ class Signup extends React.Component {
                             name:'user-plus',
                             type:'font-awesome',
                         }}
-                        title="Login"
+                        title="Signup"
                     />
                     <Button 
                         titleStyle={{color:'#2b2e4a'}}

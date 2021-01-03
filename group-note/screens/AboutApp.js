@@ -5,8 +5,9 @@ import { Card } from 'react-native-elements'
 export default function AboutApp() {
   return (
     <View style={styles.container}>
+
         <Card containerStyle={styles.card}>
-            <Card.Title>Grouo Notes App</Card.Title>
+           <Card.Title>About app</Card.Title>
             <Card.Divider/>
             <Card.Image resizeMode='contain' source={require('../assets/logo.png')}>
                 
