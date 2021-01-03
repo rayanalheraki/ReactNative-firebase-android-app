@@ -6,19 +6,13 @@ import firebase from './firebase-connect/firebaseConf';
 import Signup from './screens/Signup.js';
 import Login from './screens/Login.js';
 
-
 // firebase test 
- firebase.database()
-          .ref(`/notes/1`)
-          .on('value', snapshot => {
-              console.log('----------',snapshot.val());
-                    
-                    
-          },[]);
-
-
+console.log("started")
 export default function App() {
-  return <Route/>;
+  return (
+    <Route/>
+    
+  );
 }
 
 const styles = StyleSheet.create({

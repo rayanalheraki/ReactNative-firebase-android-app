@@ -1,49 +1,95 @@
 import React from 'react'
-import { View, TextInput, StyleSheet, TouchableOpacity, Text, Button } from 'react-native'
-
+import { StatusBar } from 'expo-status-bar';
+import { View , StyleSheet, Text, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Button,Input} from 'react-native-elements';
 import * as Firebase from 'firebase';
 
 
 class Login extends React.Component {
     state = {
         email: '',
-        password: ''
+        password: '',
+        'authStatus': '',
+        
     }
 
     handleLogin = () => {
         const { email, password } = this.state
         Firebase.auth()
             .signInWithEmailAndPassword(email, password)
-            .then(() => this.props.navigation.navigate('HomeScreen'))
+            .then(async() => {
+                try {
+                await AsyncStorage.setItem('@authStatus', 'true');
+                await AsyncStorage.setItem('@email', email)
+                 this.props.navigation.navigate('MainDrawerNavigation')
+                } catch (error) {
+                Alert.alert('alert','asyncstorage problem')
+                }
+
+                 
+            })
             .catch(error => alert(error))
+        
     }
+    componentDidMount = () =>{ AsyncStorage.getItem('@authStatus').then((value)  => this.setState({ '@authStatus': value }))
+    
+    }
+    
+    
 
     render() {
         
         return (
             <View style={styles.container}>
-                <TextInput
-                    style={styles.inputBox}
-                    value={this.state.email}
-                    onChangeText={email => this.setState({ email })}
-                    placeholder='Email'
-                    autoCapitalize='none'
-                />
-                <TextInput
-                    style={styles.inputBox}
-                    value={this.state.password}
+                <Text>
+                 {this.state.authStatus}
+                </Text>
+                <View style={styles.form}>
+                    <Input
+                        placeholder='Email'
+                        onChangeText={email => this.setState({ email })}
+                        value={this.state.email}
+                        autoCapitalize='none'
+                    />
+                    <Input
                     onChangeText={password => this.setState({ password })}
+                    value={this.state.password}
                     placeholder='Password'
                     secureTextEntry={true}
-                />
-                <TouchableOpacity style={styles.button} onPress={this.handleLogin}>
-                    <Text style={styles.buttonText}>Login</Text>
-                </TouchableOpacity>
-                <Button
-                // Navigate to create account page
-                    title="Don't have an account yet? Sign up"
-                    onPress={() => this.props.navigation.navigate('Signup')}
-                />
+                    />
+                    <Button 
+                        onPress={this.handleLogin}
+                        buttonStyle={{
+                            backgroundColor:'#2b2e4a',
+                            margin:10,
+                        }}
+                        icon={{
+                            size: 15,
+                            color:"white",
+                            name:'sign-in',
+                            type:'font-awesome',
+                        }}
+                        title="Login"
+                    />
+                    <Text style={styles.text}>Don't have an account yet?</Text>
+                    <Button 
+                        titleStyle={{color:'#2b2e4a'}}
+                        onPress={() => this.props.navigation.navigate('Signup')}
+                        buttonStyle={{
+                            backgroundColor:'#dddddd',
+                            margin:10,
+                        }}
+                        color='#2b2e4a'
+                        icon={{
+                            size: 15,
+                            color:"#2b2e4a",
+                            name:'user-plus',
+                            type:'font-awesome',
+                        }}
+                        title="Sign up"
+                    />
+                </View>
             </View>
         )
     }
@@ -56,33 +102,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    inputBox: {
-        width: '85%',
-        margin: 10,
-        padding: 15,
-        fontSize: 16,
-        borderColor: '#d3d3d3',
-        borderBottomWidth: 1,
-        textAlign: 'center'
+    text:{
+        fontSize:13,
+        marginLeft:44,
     },
-    button: {
-        marginTop: 30,
-        marginBottom: 20,
-        paddingVertical: 5,
-        alignItems: 'center',
-        backgroundColor: '#F6820D',
-        borderColor: '#F6820D',
-        borderWidth: 1,
-        borderRadius: 5,
-        width: 200
-    },
-    buttonText: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#fff'
-    },
-    buttonSignup: {
-        fontSize: 12
+    form:{
+        width:250,
     }
 })
 

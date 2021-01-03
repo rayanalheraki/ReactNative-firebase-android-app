@@ -1,99 +1,23 @@
-import React,{useState} from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import React,{useState,useEffect} from 'react';
+import { StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StatusBar } from 'expo-status-bar';
 import "react-native-gesture-handler";
-import { Ionicons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
 
-import HomeScreen from './screens/HomeScreen';
-import CreateGroup from './screens/CreateGroup';
-import JoinGroup from './screens/JoinGroup';
-import GroupScreen from './screens/GroupScreen';
+//------ screens ----------
 import Login from './screens/Login';
 import Signup from './screens/Signup';
-import Note from './screens/Note';
-import NoteEdit from './screens/NoteEdit';
-import Profil from './screens/Profil';
+import MainDrawerNavigation from './navigation/MainDrawerNavigation';
 
-const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
+const Stack2 = createStackNavigator();
 
-const StackHome = createStackNavigator();
-const StackCreateGroup = createStackNavigator();
-const StackJoinGroup = createStackNavigator();
-
-function HomeStackNavigation() {
+function stacklogin(){
   return(
-    <StackHome.Navigator
-      screenOptions={{
-        headerStyle: {
-        backgroundColor: '#e84545',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-        fontWeight: 'bold',
-        },
-      }}
-    >
-        <StackHome.Screen 
-          name="HomeScreen" component={HomeScreen} 
-          options={({ navigation }) => ({
-            headerTitle: "Your Groups",
-            headerRight: () => (
-              <View style={{ flexDirection: "row", justifyContent: "flex-end", marginRight: 15, width: 120 }} >
-
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.toggleDrawer();
-                  }}
-                >
-                  <Ionicons
-                    name='list-outline'
-                    size={30}
-                    color='white'
-                  />
-                </TouchableOpacity>
-              </View>
-            ),
-          })}
-          />
-        <StackHome.Screen name="Note" component={Note} />
-        <StackHome.Screen name="NoteEdit" component={NoteEdit} />
-        <StackCreateGroup.Screen name="GroupScreen" component={GroupScreen} />
-        
-
-      </StackHome.Navigator>
-  );
-}
-
-function CreateGroupStack() {
-  return(
-    <StackCreateGroup.Navigator
-      screenOptions={{
-        headerStyle: {
-        backgroundColor: '#e84545',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-        fontWeight: 'bold',
-        },
-    }}
-    >
-        <StackCreateGroup.Screen name="CreateGroup" component={CreateGroup} />
-        <StackCreateGroup.Screen name="GroupScreen" component={GroupScreen} />
-        <StackHome.Screen name="Note" component={Note} />
-        <StackHome.Screen name="NoteEdit" component={NoteEdit} />
-    </StackCreateGroup.Navigator>
-  );
-}
-
-function JoinGroupStack() {
-  return(
-    <StackJoinGroup.Navigator
-    screenOptions={{
+  <Stack2.Navigator
+  screenOptions={{
       headerStyle: {
       backgroundColor: '#e84545',
       },
@@ -102,106 +26,72 @@ function JoinGroupStack() {
       fontWeight: 'bold',
       },
   }}
-    >
-        <StackJoinGroup.Screen name="JoinGroup" component={JoinGroup} />
-        <StackCreateGroup.Screen name="GroupScreen" component={GroupScreen} />
-        <StackHome.Screen name="Note" component={Note} />
-        <StackHome.Screen name="NoteEdit" component={NoteEdit} />
-    </StackJoinGroup.Navigator>
+>
+      <Stack2.Screen name="Login" component={Login} options={() => ({ headerTitle: "Login" })} />
+      <Stack2.Screen name="Signup" component={Signup} options={() => ({ headerTitle: "Signup" })} />
+
+</Stack2.Navigator>
   );
+
 }
 
-function  TapNavigation() {
-  return(
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          if (route.name === 'HomeStackNavigation') {
-            return (
-              <Ionicons
-                name={
-                  focused
-                  ? 'home'
-                  : 'home-outline'
-                }
-                size={size}
-                color={color}
-              />
-            );
-          } else if (route.name === 'CreateGroupStack') {
-            return (
-              <Ionicons
-                name={focused ? 'add' : 'add-circle-outline'}
-                size={size}
-                color={color}
-              />
-            );
-          }else if (route.name === 'JoinGroupStack') {
-            return (
-              <Ionicons
-                name={focused ? 'enter' : 'enter-outline'}
-                size={size}
-                color={color}
-              />
-            );
-          }
-        },
-      })}
-      tabBarOptions={{
-        activeTintColor: 'tomato',
-        inactiveTintColor: 'white',
-        safeAreaInsets:{bottom:7 , },
-        style: { backgroundColor: '#2b2e4a' ,fontWeight:'bold',paddingTop:10}
-
-      }}
-    >
-      <Tab.Screen name="HomeStackNavigation" component={HomeStackNavigation}  options={()=>({  tabBarLabel: 'Home' }) } />
-      <Tab.Screen name="CreateGroupStack" component={CreateGroupStack} options={()=>({  tabBarLabel:'Create a group'}) }/>
-      <Tab.Screen name="JoinGroupStack" component={JoinGroupStack} options={()=>({ tabBarLabel: 'Join a group' }) }/>
-    </Tab.Navigator>
-  );
-  
-}
-
-function MainDrawerNavigation(){
-
-  return(
-    <Drawer.Navigator>
-      <Drawer.Screen name="TapNavigation" component={TapNavigation} />
-      <Drawer.Screen name="Profil" component={Profil} />
-    </Drawer.Navigator>
-  );
-}
 
 export default function Route() {
-  const [userToken,setUserToken]= useState(null);
+  const [userToken,setUserToken]= useState('');
 
+
+  useEffect(() => {
+    getData();
+  },[]);
+
+  
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@authStatus')
+      if(value !== null) {
+        setUserToken(value)
+        console.log('*******',value)
+      }
+    } catch(error) {
+      alert(error)
+    }
+  }
   return (
     <NavigationContainer >
       
+      <StatusBar style="auto" />
         <Stack.Navigator
-        initialRouteName="Login"
-        screenOptions={{
-            headerStyle: {
-            backgroundColor: '#e84545',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-            fontWeight: 'bold',
-            },
-        }}
-        >
-            {userToken == null ? (
-              <Stack.Screen name="MainDrawerNavigation" component={MainDrawerNavigation} options={()=>({ headerShown: false}) } />
+
+            screenOptions={{
+                headerStyle: {
+                backgroundColor: '#e84545',
+                },
+                headerTintColor: '#fff',
+                headerTitleStyle: {
+                fontWeight: 'bold',
+                },
+            }}
+          >
+        
+            {userToken === 'true'? (
+              <>
+             
+                  <Stack.Screen name="MainDrawerNavigation" component={MainDrawerNavigation} options={()=>({ headerShown: false}) } />
+                  <Stack.Screen name="stacklogin" component={stacklogin} options={()=>({ headerShown: false}) } />
+              
+
+              </>
             ) : (
               <>
+             
                 <Stack.Screen name="Login" component={Login} options={() => ({ headerTitle: "Login" })} />
                 <Stack.Screen name="Signup" component={Signup} options={() => ({ headerTitle: "Signup" })} />
                 <Stack.Screen name="MainDrawerNavigation" component={MainDrawerNavigation} options={()=>({ headerShown: false}) } />
+                <Stack.Screen name="stacklogin" component={stacklogin} options={()=>({ headerShown: false}) } />
+
               </>
             )}
-           
-        </Stack.Navigator>
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }

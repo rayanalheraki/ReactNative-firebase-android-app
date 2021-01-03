@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, TextInput, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import * as Firebase from 'firebase';
-
+import {Button,Input} from 'react-native-elements';
 
 class Signup extends React.Component {
     state = {
@@ -21,29 +21,57 @@ class Signup extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <TextInput
-                    style={styles.inputBox}
-                    value={this.state.name}
-                    onChangeText={name => this.setState({ name })}
-                    placeholder='Full Name'
-                />
-                <TextInput
-                    style={styles.inputBox}
-                    value={this.state.email}
-                    onChangeText={email => this.setState({ email })}
-                    placeholder='Email'
-                    autoCapitalize='none'
-                />
-                <TextInput
-                    style={styles.inputBox}
-                    value={this.state.password}
-                    onChangeText={password => this.setState({ password })}
-                    placeholder='Password'
-                    secureTextEntry={true}
-                />
-                <TouchableOpacity style={styles.button} onPress={this.handleSignUp}>
-                    <Text style={styles.buttonText}>Signup</Text>
-                </TouchableOpacity>
+                
+                <View style={styles.form}>
+                    <Input
+                        value={this.state.name}
+                        onChangeText={name => this.setState({ name })}
+                        placeholder='Full Name'
+                    />
+                    <Input
+                        value={this.state.email}
+                        onChangeText={email => this.setState({ email })}
+                        placeholder='Email'
+                        autoCapitalize='none'
+                    />
+                    <Input
+                        value={this.state.password}
+                        onChangeText={password => this.setState({ password })}
+                        placeholder='Password'
+                        secureTextEntry={true}
+                    />
+                    <Button 
+                        onPress={this.handleSignUp}
+                        buttonStyle={{
+                            backgroundColor:'#2b2e4a',
+                            margin:10,
+                        }}
+                        icon={{
+                            size: 15,
+                            color:"white",
+                            name:'user-plus',
+                            type:'font-awesome',
+                        }}
+                        title="Login"
+                    />
+                    <Button 
+                        titleStyle={{color:'#2b2e4a'}}
+                        onPress={() => this.props.navigation.goBack()}
+                        buttonStyle={{
+                            backgroundColor:'#dddddd',
+                            margin:10,
+                        }}
+                        color='#2b2e4a'
+                        icon={{
+                            size: 15,
+                            color:"#2b2e4a",
+                            name:'sign-in',
+                            type:'font-awesome',
+                        }}
+                        title="Login"
+                    />
+                </View>
+
             </View>
         )
     }
@@ -55,6 +83,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    form:{
+        width:250,
     },
     inputBox: {
         width: '85%',
