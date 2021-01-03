@@ -45,7 +45,7 @@ export default function JoinGroup({ navigation}){
 
                                     );
                                 })
-                                navigation.navigate('groupScreen', {
+                                navigation.navigate('GroupScreen', {
                                     groupId : groupId.toLowerCase(),
                                     groupCode:code,
                                 })
