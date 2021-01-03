@@ -90,9 +90,6 @@ export default function  HomeScreen({navigation}) {
                     <Card key = {item.id} containerStyle={{marginBottom:-10 }}>
                         <Card.Title style={styles.title}>{item.groupName}</Card.Title>
                         <Card.Divider/>
-                            {/* <Text style={styles.text}>
-                                {item.GroupId}
-                            </Text> */}
                         <View style={{alignItems:'flex-end',flexDirection: 'row',justifyContent: 'space-between' }}>
                             
                             <Button

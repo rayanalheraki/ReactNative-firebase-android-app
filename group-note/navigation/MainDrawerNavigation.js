@@ -1,11 +1,10 @@
-import React,{useState,useEffect} from 'react';
-import { StyleSheet, View } from 'react-native';
+import React from 'react';
 import "react-native-gesture-handler";
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import Profile from '../screens/Profile';
 import TapNavigation from './TapNavigation';
 import DrawerContent from './DrawerContent';
 import AboutApp from '../screens/AboutApp';
+
 const Drawer = createDrawerNavigator();
 
 export default function MainDrawerNavigation(){
